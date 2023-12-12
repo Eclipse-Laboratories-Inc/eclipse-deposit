@@ -1,0 +1,14 @@
+{
+  "name": "ethereum-scripts",
+  "version": "1.0.0",
+  "description": "Utility and helper scripts for working on ethereum smart-contracts",
+  "main": "index.js",
+  "license": "None",
+  "scripts": {
+    "deposit": "node deposit.js"
+  },
+  "dependencies": {
+    "bs58": "^5.0.0",
+    "ethers": "^6.8.0"
+  }
+}
