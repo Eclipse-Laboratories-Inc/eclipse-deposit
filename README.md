@@ -30,10 +30,7 @@ To generate a wallet for deposits:
 ## Create a Deposit
 
 1. Obtain and set up the deposit.js script:
-    - Clone the repository:
-        - `git clone https://github.com/eclipse-Laboratories-Inc/syzygy`
-    - Navigate to the deposit script directory:
-        - `cd scripts/ethereum`
+    - Clone this repository
     - Install script dependencies:
         - `yarn install`
 2. Execute the script:
@@ -43,10 +40,10 @@ Details:
 - The `[Solana Address]` is the one you generated using the Solana CLI or Phantom.
 - The `[Ethereum Private Key]` is sourced from Metamask.
 - `[Amount in Gwei]` is the desired deposit amount, with a minimum of '1500000' gwei (0.0015 ETH).
-- `[Fee in Gwei]` is the transaction processing fee, settable to '1500000' gwei.
+- `[Fee in Gwei]` is the transaction processing fee, currently is ignored but can set to '100' gwei.
 
 A successful command example:
 
-> node deposit.js yyiecymjvwYE6Wxg4ZSt4ibdfFRo3JUNhQ99AKnaRqu 0x7C9e161ebe55000a3220F972058Fb83273653a6e 1500000 1500000 0x3e1bf180e4778c7944f509b422711101186d26ac15337934f12088623755c0b7 https://rpc.sepolia.org/
+> node deposit.js yyiecymjvwYE6Wxg4ZSt4ibdfFRo3JUNhQ99AKnaRqu 0x7C9e161ebe55000a3220F972058Fb83273653a6e 1500000 100 3e1bf180e4778c7944f509b422711101186d26ac15337934f12088623755c0b7 https://rpc.sepolia.org/
 
 > Transaction successful: 0xb05a37f4e4b420f651fdffb0b169ba96cb8c8e201b32f3d8d0c94705d7dc6d5f
