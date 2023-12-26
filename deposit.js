@@ -37,7 +37,7 @@ async function depositToEtherBridge() {
     try {
         const amountWei = utils.parseUnits(amount, 'gwei');
         const feeWei = utils.parseUnits(fee, 'gwei');
-        const totalWei = amountWei + feeWei;
+        const totalWei = amountWei.add(feeWei);;
         const tx = await contract.deposit(hexSolanaAddress, amountWei, feeWei, {
             value: totalWei
         });
