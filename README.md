@@ -19,7 +19,20 @@ For Metamask:
 
 ### Solana CLI
 
-The Solana CLI tools are necessary for generating a deposit address on the rollup. 
+The Solana CLI tools are necessary for generating a deposit address on the rollup. First, we need to install Rust. And then we can install Solana CLI.
+
+```bash
+#Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+#Check if Rust and Cargo istalled
+rustc --version
+cargo --version
+```
+```bash
+#Install Solana CLI
+sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+```
+
 
 To generate a wallet for deposits:
 1. Install the Solana CLI tools.
@@ -34,7 +47,9 @@ To generate a wallet for deposits:
     - Install script dependencies:
         - `yarn install`
 2. Execute the script:
-    - `node deposit.js [Solana Address] 0x7C9e161ebe55000a3220F972058Fb83273653a6e [Amount in Gwei] [Fee in Gwei] [Ethereum Private Key] https://rpc.sepolia.org
+    - ```bash
+      node deposit.js [Solana Address] 0x7C9e161ebe55000a3220F972058Fb83273653a6e [Amount in Gwei] [Fee in Gwei] [Ethereum Private Key] https://rpc.sepolia.org
+      ```
 
 Details:
 - The `[Solana Address]` is the one you generated using the Solana CLI or Phantom.
@@ -44,6 +59,10 @@ Details:
 
 A successful command example:
 
-> node deposit.js yyiecymjvwYE6Wxg4ZSt4ibdfFRo3JUNhQ99AKnaRqu 0x7C9e161ebe55000a3220F972058Fb83273653a6e 1500000 100 3e1bf180e4778c7944f509b422711101186d26ac15337934f12088623755c0b7 https://rpc.sepolia.org/
-
-> Transaction successful: 0xb05a37f4e4b420f651fdffb0b169ba96cb8c8e201b32f3d8d0c94705d7dc6d5f
+```bash
+node deposit.js yyiecymjvwYE6Wxg4ZSt4ibdfFRo3JUNhQ99AKnaRqu 0x7C9e161ebe55000a3220F972058Fb83273653a6e 1500000 100 3e1bf180e4778c7944f509b422711101186d26ac15337934f12088623755c0b7 https://rpc.sepolia.org/
+```
+The output of the command should look like this:
+```console
+Transaction successful: 0xb05a37f4e4b420f651fdffb0b169ba96cb8c8e201b32f3d8d0c94705d7dc6d5f
+```
