@@ -13,13 +13,24 @@ const bs58 = require('bs58');
 const utils = require('ethers/utils');
 
 // Check if enough arguments are provided
-if (process.argv.length < 7) {
-    console.error("Usage: node script.js [Solana Address] [EtherBridge Address] [Amount in Gwei] [Fee in Gwei] [Private Key] [JSON RPC URL]");
-    process.exit(1);
+if (process.argv.length != 9) {
+  console.log('');
+  console.log(
+    'Usage: node script.js [Solana Address] [EtherBridge Address] [Amount in Gwei] [Fee in Gwei] [Private Key] [JSON RPC URL] [HOW MANY DEPOSIT]',
+  );
+  return;
 }
 
 // Extract command line arguments
-const [solanaAddress, etherBridgeAddress, amount, fee, privateKey, jsonRpcUrl] = process.argv.slice(2);
+const [
+  solanaAddress,
+  etherBridgeAddress,
+  amount,
+  fee,
+  privateKey,
+  jsonRpcUrl,
+  how_many_deposit,
+] = process.argv.slice(2);
 
 // Convert Solana address from base58 to hex
 const decodedSolanaAddress = bs58.decode(solanaAddress);
@@ -31,20 +42,24 @@ const wallet = new ethers.Wallet(privateKey, provider);
 
 // Define the EtherBridge contract interaction
 async function depositToEtherBridge() {
-    const abi = ["function deposit(bytes32,uint256,uint256)"];
-    const contract = new ethers.Contract(etherBridgeAddress, abi, wallet);
+  console.log('');
+  const abi = ['function deposit(bytes32,uint256,uint256)'];
+  const contract = new ethers.Contract(etherBridgeAddress, abi, wallet);
 
-    try {
-        const amountWei = utils.parseUnits(amount, 'gwei');
-        const feeWei = utils.parseUnits(fee, 'gwei');
-        const totalWei = amountWei + feeWei;
-        const tx = await contract.deposit(hexSolanaAddress, amountWei, feeWei, {
-            value: totalWei
-        });
-        console.log(`Transaction successful: ${tx.hash}`);
-    } catch (error) {
-        console.error(`Transaction failed: ${error.message}`);
+  try {
+    const amountWei = utils.parseUnits(amount, 'gwei');
+    const feeWei = utils.parseUnits(fee, 'gwei');
+    const totalWei = amountWei + feeWei;
+
+    for (let i = 0; i < how_many_deposit; i++) {
+      const tx = await contract.deposit(hexSolanaAddress, amountWei, feeWei, {
+        value: totalWei,
+      });
+      console.log(`Transaction ${i + 1} successful: ${tx.hash}`);
     }
+  } catch (error) {
+    console.error(`Transaction failed: ${error.message}`);
+  }
 }
 
 depositToEtherBridge();
