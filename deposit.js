@@ -12,50 +12,76 @@
  * Transaction hash: 0x335c067c7280aa3bd2d688cd4c8695c86b3f7fe785be5379c5d98731db0269cf
  */
 
-const ethers = require('ethers');
-const bs58 = require('bs58');
-const utils = require('ethers/utils');
+const ethers = require("ethers");
+const bs58 = require("bs58");
+const utils = require("ethers/utils");
+const readline = require("readline");
 
-// Check if enough arguments are provided
-if (process.argv.length < 6) {
-    console.error("Usage: node script.js [Solana Address] [EtherBridge Address] [Private Key] [JSON RPC URL]");
-    process.exit(1);
+// Function to prompt user input
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+async function askQuestion(query) {
+  return new Promise((resolve) =>
+    rl.question(query, (answer) => resolve(answer))
+  );
 }
 
-// Extract command line arguments
-const [solanaAddress, etherBridgeAddress, amount, privateKey, jsonRpcUrl] = process.argv.slice(2);
+async function main() {
+  const solanaAddress = await askQuestion("Enter Solana Address: ");
+  const etherBridgeAddress = await askQuestion("Enter EtherBridge Address: ");
+  const amount = await askQuestion("Enter Amount in Gwei: ");
+  const privateKey = await askQuestion("Enter Private Key: ");
 
-// Convert Solana address from base58 to hex
-const decodedSolanaAddress = bs58.decode(solanaAddress);
-const hexSolanaAddress = utils.hexlify(decodedSolanaAddress);
+  // Note about JSON RPC URL being optional
+  console.log(
+    "Enter JSON RPC URL (optional, press enter to use default https://rpc2.sepolia.org/):"
+  );
+  let jsonRpcUrl = await askQuestion("");
+  if (!jsonRpcUrl) {
+    jsonRpcUrl = "https://rpc2.sepolia.org/";
+  }
 
-// Setup Ethereum blockchain connection
-const provider = new ethers.JsonRpcProvider(jsonRpcUrl);
-const wallet = new ethers.Wallet(privateKey, provider);
+  // Convert Solana address from base58 to hex
+  const decodedSolanaAddress = bs58.decode(solanaAddress);
+  const hexSolanaAddress = utils.hexlify(decodedSolanaAddress);
 
-// Define the EtherBridge contract interaction
-async function depositToEtherBridge() {
+  // Setup Ethereum blockchain connection
+  const provider = new ethers.JsonRpcProvider(jsonRpcUrl);
+  const wallet = new ethers.Wallet(privateKey, provider);
+
+  // Define the EtherBridge contract interaction
+  async function depositToEtherBridge() {
     const abi = [
-        "function deposit(bytes32,uint256) payable",
-        "function MIN_DEPOSIT() pure returns (uint256)"
+      "function deposit(bytes32,uint256) payable",
+      "function MIN_DEPOSIT() pure returns (uint256)",
     ];
     const contract = new ethers.Contract(etherBridgeAddress, abi, wallet);
 
     try {
-        // Convert the amount to Wei for consistency with Solidity
-        const amountWei = ethers.parseUnits(amount, 'gwei');
+      // Convert the amount to Wei for consistency with Solidity
+      const amountWei = ethers.parseUnits(amount, "gwei");
 
-        // Submit a deposit transaction
-        const tx = await contract.deposit(hexSolanaAddress, amountWei, {
-            value: amountWei,
-            gasLimit: "300000"
-        });
+      // Notify user that deposit is starting
+      console.log("Starting the deposit process...");
 
-        // Output transaction hash
-        console.log(`Transaction hash: ${tx.hash}`);
+      // Submit a deposit transaction
+      const tx = await contract.deposit(hexSolanaAddress, amountWei, {
+        value: amountWei,
+        gasLimit: "300000",
+      });
+
+      // Output transaction hash
+      console.log(`Transaction hash: ${tx.hash}`);
     } catch (error) {
-        console.error(`Exception: ${error.message}`);
+      console.error(`Exception: ${error.message}`);
     }
+  }
+
+  await depositToEtherBridge();
+  rl.close();
 }
 
-depositToEtherBridge();
+main();
