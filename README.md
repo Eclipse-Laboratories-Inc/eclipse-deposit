@@ -41,3 +41,4 @@ Details:
 - The `[Ethereum Private Key]` is sourced from Metamask.
 - `[Amount in Gwei]` is the desired deposit amount, with a minimum of '1500000' gwei (0.0015 ETH).
 
+PLease reach out to cooper@eclipse.xyz with additional questions
