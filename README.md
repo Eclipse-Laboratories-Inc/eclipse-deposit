@@ -34,7 +34,7 @@ To generate a wallet for deposits:
     - Install script dependencies:
         - `yarn install`
 2. Execute the script:
-    - `node deposit.js [Solana Address] 0x11b8db6bb77ad8cb9af09d0867bb6b92477dd68e [Amount in Gwei] [Ethereum Private Key] https://rpc.sepolia.org
+    - node deposit.js [Solana Address] 0x11b8db6bb77ad8cb9af09d0867bb6b92477dd68e [Amount in Gwei] [Ethereum Private Key] https://rpc.sepolia.org
 
 Details:
 - The `[Solana Address]` is the one you generated using the Solana CLI or Phantom.
