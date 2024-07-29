@@ -1,14 +1,32 @@
 {
-  "name": "ethereum-scripts",
-  "version": "1.0.0",
-  "description": "Utility and helper scripts for working on ethereum smart-contracts",
-  "main": "index.js",
-  "license": "None",
-  "scripts": {
-    "deposit": "node deposit.js"
+  "name": "eclipse-deposit",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "A tool for depositing Ether into the Eclipse rollup, supporting both Sepolia and Ethereum Mainnet.",
+  "main": "src/lib.js",
+  "bin": {
+    "eclipse-deposit": "bin/cli.js"
   },
+  "repository": "https://github.com/Eclipse-Laboratories-Inc/eclipse-deposit",
+  "author": "Eclipse Labs Team",
+  "license": "Apache-2.0",
+  "private": false,
   "dependencies": {
-    "bs58": "^5.0.0",
-    "ethers": "^6.8.0"
+    "@solana/web3.js": "^1.95.2",
+    "bs58": "^6.0.0",
+    "commander": "^12.1.0",
+    "viem": "^2.18.4"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.8.0",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3"
+  },
+  "scripts": {
+    "lint": "eslint 'src/**/*.js'",
+    "format": "prettier --write 'src/**/*.js'"
   }
 }
