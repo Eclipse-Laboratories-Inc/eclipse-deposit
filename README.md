@@ -26,7 +26,12 @@ To generate a wallet for deposits:
 2. To generate a wallet:
     - Execute `solana-keygen new --no-outfile` or `solana-keygen new --outfile my-wallet.json`.
 3. Copy the public key from the output, which should resemble `6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8`.
-## Installation
+
+## Installation (via npm)
+
+TODO
+
+## Installation (via GitHub)
 
 1. Clone this repository:
     ```bash
@@ -43,26 +48,21 @@ To generate a wallet for deposits:
 
 1. Run the CLI tool with the necessary options:
     ```bash
-    eclipse-deposit deposit -k <path_to_private_key> -d <solana_destination_address> -a <amount_in_ether> --mainnet|--sepolia [-r <rpc_url>]
+    node bin/cli.js -k <path_to_private_key> -d <solana_destination_address> -a <amount_in_ether> --mainnet|--sepolia 
     ```
 
    For example:
 
    **Mainnet Deposit:**
     ```bash
-    eclipse-deposit deposit -k /path/to/private-key.txt -d 6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8 -a 0.01 --mainnet
+    node bin/cli.js -k private-key.txt -d 6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8 -a 0.002 --mainnet
     ```
 
    **Sepolia Testnet Deposit:**
     ```bash
-    eclipse-deposit deposit -k /path/to/private-key.txt -d 6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8 -a 0.01 --sepolia
+    node bin/cli.js -k private-key.txt -d 6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8 -a 0.002 --sepolia
     ```
-
-   **With Custom RPC URL:**
-    ```bash
-    eclipse-deposit deposit -k /path/to/private-key.txt -d 6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8 -a 0.01 --mainnet -r https://custom-rpc-url
-    ```
-
+   - 
    - The `-k, --key-file` option specifies the path to the Ethereum private key file.
    - The `-d, --destination` option specifies the Solana destination address on the rollup (base58 encoded).
    - The `-a, --amount` option specifies the amount of Ether to deposit.
