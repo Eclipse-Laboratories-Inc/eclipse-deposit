@@ -19,7 +19,8 @@ export function validateSolanaAddress(address) {
     if (decoded.length !== 32) {
       throw new Error('Invalid length for a Solana address.');
     }
-    //
+
+    // TODO: finish validation for solana addres
     // // Convert the decoded address to a PublicKey object
     // const publicKey = new PublicKey(decoded);
     //
