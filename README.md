@@ -29,8 +29,20 @@ To generate a wallet for deposits:
 
 ## Installation (via npm)
 
-TODO
+1. Clone this repository:
+    ```bash
+    git clone https://github.com/Eclipse-Laboratories-Inc/eclipse-deposit.git
+    cd eclipse-deposit
+    ```
 
+2. Install the necessary dependencies:
+    ```bash
+    npm install
+    ```
+3. Link the package globally to use it as a CLI tool
+    ```bash
+    npm link
+    ```
 ## Installation (via GitHub)
 
 1. Clone this repository:
