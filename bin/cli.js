@@ -11,7 +11,6 @@ program
     .version('2.0.0');
 
 program
-    .command('deposit')
     .description('Deposit Ether into the Eclipse rollup')
     .requiredOption('-d, --destination <address>', 'Destination address on the rollup (base58 encoded)')
     .requiredOption('-a, --amount <ether>', 'Amount in Ether to deposit')
