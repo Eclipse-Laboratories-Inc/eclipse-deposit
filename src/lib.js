@@ -1,19 +1,7 @@
 import { createClient, parseEther } from 'viem';
-import { getPrivateKeyFromFile } from './config.js';
+import { NETWORK_CONFIG, getPrivateKeyFromFile } from './config.js';
 import { validateSolanaAddress } from './validate.js';
 import { deposit } from './deposit.js';
-
-// Define network configurations
-const NETWORK_CONFIG = {
-  mainnet: {
-    etherBridgeAddress: '0xMainnetContractAddress',
-    rpcUrl: 'todo', // Update with the actual RPC URL for mainnet
-  },
-  sepolia: {
-    etherBridgeAddress: '0xSepoliaContractAddress',
-    rpcUrl: 'https://rpc2.sepolia.org',
-  },
-};
 
 export async function runDeposit({
   keyFile,
