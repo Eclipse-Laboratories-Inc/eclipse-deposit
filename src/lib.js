@@ -36,10 +36,10 @@ export async function runDeposit({ destination, amount, chainName, keyFile }) {
     if (!networkConfig) {
       throw new Error(`No configuration found for chain: ${chainName}`);
     }
-    const { chain, etherBridgeAddress } = networkConfig;
+    const { chain, rpc, etherBridgeAddress } = networkConfig;
     const client = createWalletClient({
       chain: chain,
-      transport: http(),
+      transport: http(rpc),
     });
 
     // Call the deposit function with the validated inputs
