@@ -1,5 +1,5 @@
-const bs58 = require('bs58');
-const { PublicKey } = require('@solana/web3.js');
+import bs58 from 'bs58';
+import PublicKey from '@solana/web3.js';
 
 // List of known Solana native program addresses
 const SOLANA_NATIVE_PROGRAMS = new Set([
@@ -10,7 +10,7 @@ const SOLANA_NATIVE_PROGRAMS = new Set([
 ]);
 
 // Function to validate Solana address
-function validateSolanaAddress(address) {
+export function validateSolanaAddress(address) {
   try {
     // Decode the base58 address
     const decoded = bs58.decode(address);
@@ -39,5 +39,3 @@ function validateSolanaAddress(address) {
     return false;
   }
 }
-
-module.exports = { validateSolanaAddress };

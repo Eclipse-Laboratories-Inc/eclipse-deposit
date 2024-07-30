@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
-const { Command } = require('commander');
-const { runDeposit } = require('../src/lib');
+import { Command } from 'commander';
+import { runDeposit } from '../src/lib.js'; // Note the `.js` extension
+
 const program = new Command();
 
 program

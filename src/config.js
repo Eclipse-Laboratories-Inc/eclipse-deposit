@@ -1,11 +1,9 @@
-const { readFileSync } = require('fs');
+import { readFileSync } from 'fs';
 
-function getPrivateKeyFromFile(filePath) {
+export function getPrivateKeyFromFile(filePath) {
   try {
     return readFileSync(filePath, 'utf8').trim();
   } catch (error) {
     throw new Error(`Failed to read private key from file: ${error.message}`);
   }
 }
-
-module.exports = { getPrivateKeyFromFile };

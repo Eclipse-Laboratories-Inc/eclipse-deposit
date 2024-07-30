@@ -1,13 +1,13 @@
-const { createClient, parseEther } = require('viem');
-const { getPrivateKeyFromFile } = require('./config');
-const { validateSolanaAddress } = require('./validate');
-const deposit = require('./deposit');
+import { createClient, parseEther } from 'viem';
+import { getPrivateKeyFromFile } from './config.js';
+import { validateSolanaAddress } from './validate.js';
+import { deposit } from './deposit.js';
 
 // Define network configurations
 const NETWORK_CONFIG = {
   mainnet: {
     etherBridgeAddress: '0xMainnetContractAddress',
-    rpcUrl: 'todo',
+    rpcUrl: 'todo', // Update with the actual RPC URL for mainnet
   },
   sepolia: {
     etherBridgeAddress: '0xSepoliaContractAddress',
@@ -15,7 +15,7 @@ const NETWORK_CONFIG = {
   },
 };
 
-async function runDeposit({
+export async function runDeposit({
   keyFile,
   destination,
   amount,
@@ -59,7 +59,3 @@ async function runDeposit({
     process.exit(1);
   }
 }
-
-module.exports = {
-  runDeposit,
-};
