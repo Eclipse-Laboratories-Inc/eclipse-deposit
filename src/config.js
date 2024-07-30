@@ -8,7 +8,7 @@ export const NETWORK_CONFIG = {
     chain: mainnet,
   },
   sepolia: {
-    etherBridgeAddress: '0xA54BCb72deDdEA36ef2B4dA12741eFcdC7c72eF1',
+    etherBridgeAddress: '0x11b8db6bb77ad8cb9af09d0867bb6b92477dd68e',
     chain: sepolia,
   },
 };

@@ -3,6 +3,7 @@ import { privateKeyToAccount } from 'viem/accounts';
 import { NETWORK_CONFIG, getPrivateKeyFromFile } from './config.js';
 import { validateSolanaAddress } from './validate.js';
 import { deposit } from './deposit.js';
+import bs58 from 'bs58';
 
 export async function runDeposit({ destination, amount, chainName, keyFile }) {
   try {
@@ -10,6 +11,9 @@ export async function runDeposit({ destination, amount, chainName, keyFile }) {
     if (!validateSolanaAddress(destination)) {
       throw new Error('Invalid Solana address.');
     }
+    const decodedSolanaAddress = bs58.decode(destination);
+    const destinationHex =
+      '0x' + Buffer.from(decodedSolanaAddress).toString('hex');
 
     // Parse and validate the amount
     const amountWei = parseEther(amount);
@@ -39,7 +43,13 @@ export async function runDeposit({ destination, amount, chainName, keyFile }) {
     });
 
     // Call the deposit function with the validated inputs
-    await deposit(client, account, etherBridgeAddress, destination, amountWei);
+    await deposit(
+      client,
+      account,
+      etherBridgeAddress,
+      destinationHex,
+      amountWei,
+    );
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1);
