@@ -1,6 +1,6 @@
-# Deposit on Testnet
+# Eclipse Deposit CLI
 
-This script allows end users to deposit Ether from Sepolia to the Eclipse test network.
+This CLI tool allows end users to deposit Ether from Ethereum Mainnet or the Sepolia test network into the Eclipse rollup, which utilizes the Solana Virtual Machine (SVM).
 
 ## Prerequisites
 
@@ -14,8 +14,8 @@ An Ethereum wallet such as Phantom or Metamask is needed.
 
 For Metamask:
 1. Choose the account you wish to use and copy its address.
-2. Visit the [Sepolia faucet](https://sepoliafaucet.com/) to airdrop tokens to yourself.
-3. To obtain your private key for later use, navigate to 'account details' in Metamask and select 'reveal private key'.
+2. Visit the [Sepolia faucet](https://sepoliafaucet.com/) to airdrop tokens to yourself, if using Sepolia.
+3. Navigate to 'account details' in MetaMask and select 'reveal private key'. Store this key in a secure file.
 
 ### Solana CLI
 
@@ -27,18 +27,52 @@ To generate a wallet for deposits:
     - Execute `solana-keygen new --no-outfile` or `solana-keygen new --outfile my-wallet.json`.
 3. Copy the public key from the output, which should resemble `6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8`.
 
+## Installation (via npm)
+
+TODO
+
+## Installation (via GitHub)
+
+1. Clone this repository:
+    ```bash
+    git clone https://github.com/Eclipse-Laboratories-Inc/eclipse-deposit.git
+    cd eclipse-deposit
+    ```
+
+2. Install the necessary dependencies:
+    ```bash
+    yarn install
+    ```
+
 ## Create a Deposit
 
-1. Obtain and set up the deposit.js script:
-    - Clone this repository
-    - Install script dependencies:
-        - `yarn install`
-2. Execute the script:
-    - `node deposit.js [Solana Address] 0x11b8db6bb77ad8cb9af09d0867bb6b92477dd68e [Amount in Gwei] [Ethereum Private Key] https://rpc.sepolia.org
+1. Run the CLI tool with the necessary options:
+    ```bash
+    node bin/cli.js -k <path_to_private_key> -d <solana_destination_address> -a <amount_in_ether> --mainnet|--sepolia 
+    ```
 
-Details:
-- The `[Solana Address]` is the one you generated using the Solana CLI or Phantom.
-- The `[Ethereum Private Key]` is sourced from Metamask.
-- `[Amount in Gwei]` is the desired deposit amount, with a minimum of '1500000' gwei (0.0015 ETH).
+   For example:
 
-Please reach out to cooper@eclipse.xyz with additional questions
+   **Mainnet Deposit:**
+    ```bash
+    node bin/cli.js -k private-key.txt -d 6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8 -a 0.002 --mainnet
+    ```
+
+   **Sepolia Testnet Deposit:**
+    ```bash
+    node bin/cli.js -k private-key.txt -d 6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8 -a 0.002 --sepolia
+    ```
+   - 
+   - The `-k, --key-file` option specifies the path to the Ethereum private key file.
+   - The `-d, --destination` option specifies the Solana destination address on the rollup (base58 encoded).
+   - The `-a, --amount` option specifies the amount of Ether to deposit.
+   - Use `--mainnet` or `--sepolia` to select the network. The tool will use different contract addresses depending on the network.
+   - The `-r, --rpc-url` option is optional and allows overriding the default JSON RPC URL.
+
+## Security Note
+
+Keep your Ethereum private key secure. Do not share it publicly or expose it in untrusted environments.
+
+## Support
+
+For issues or questions, please contact cooper@eclipse.xyz.
