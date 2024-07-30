@@ -1,4 +1,4 @@
-import { createClient, parseEther } from 'viem';
+import { createClient, http, parseEther } from 'viem';
 import { NETWORK_CONFIG, getPrivateKeyFromFile } from './config.js';
 import { validateSolanaAddress } from './validate.js';
 import { deposit } from './deposit.js';
@@ -35,9 +35,10 @@ export async function runDeposit({
     const effectiveRpcUrl = rpcUrl || defaultRpcUrl;
 
     // Set up the client
+    const transport = http(effectiveRpcUrl);
     const client = createClient({
-      transport: effectiveRpcUrl,
-      wallet: { privateKey },
+      transport: transport,
+      account: { privateKey },
     });
 
     // Call the deposit function with the validated inputs

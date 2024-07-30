@@ -27,4 +27,15 @@ program
         runDeposit(options);
     });
 
+// Defaults to 'deposit' subcommand if no other subcommand is provided
+program
+    .arguments('[args...]')
+    .action((args, cmdObj) => {
+        if (cmdObj.opts().keyFile || cmdObj.opts().destination || cmdObj.opts().amount || cmdObj.opts().mainnet || cmdObj.opts().sepolia || cmdObj.opts().rpcUrl) {
+            runDeposit(cmdObj.opts());
+        } else {
+            console.error('Error: Missing arguments for deposit.');
+            program.outputHelp();
+        }
+    });
 program.parse(process.argv);
