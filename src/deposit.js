@@ -3,6 +3,7 @@ import bs58 from 'bs58';
 
 export async function deposit(
   client,
+  account,
   etherBridgeAddress,
   destination,
   amountWei,
@@ -38,22 +39,14 @@ export async function deposit(
       args: [destinationBytes32, amountWei],
     });
 
-    // Convert amountWei to a hex string
-    const valueHex = `0x${amountWei.toString(16)}`;
-
     // Send the transaction
-    const tx = await client.request({
-      method: 'eth_sendTransaction',
-      params: [
-        {
-          from: client.account.address,
-          to: etherBridgeAddress,
-          data,
-          value: valueHex,
-        },
-      ],
+    const hash = await client.sendTransaction({
+      data: data.toString(),
+      account,
+      to: etherBridgeAddress,
+      value: amountWei,
     });
-    console.log(`Transaction hash: ${tx.hash}`);
+    console.log(`Transaction hash: ${hash}`);
   } catch (error) {
     console.error(`Error during deposit: ${error.message}`);
     throw error;

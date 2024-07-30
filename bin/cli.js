@@ -13,29 +13,55 @@ program
 program
     .command('deposit')
     .description('Deposit Ether into the Eclipse rollup')
-    .requiredOption('-k, --key-file <path>', 'Path to the Ethereum private key file')
     .requiredOption('-d, --destination <address>', 'Destination address on the rollup (base58 encoded)')
     .requiredOption('-a, --amount <ether>', 'Amount in Ether to deposit')
     .option('--mainnet', 'Use Ethereum Mainnet')
     .option('--sepolia', 'Use Sepolia test network')
-    .option('-r, --rpc-url <url>', 'Optional: JSON RPC URL to override the default')
+    .requiredOption('-k, --key-file <path>', 'Path to the Ethereum private key file')
     .action((options) => {
         if (!options.mainnet && !options.sepolia) {
             console.error('Error: You must specify either --mainnet or --sepolia');
             process.exit(1);
         }
-        runDeposit(options);
-    });
-
-// Defaults to 'deposit' subcommand if no other subcommand is provided
-program
-    .arguments('[args...]')
-    .action((args, cmdObj) => {
-        if (cmdObj.opts().keyFile || cmdObj.opts().destination || cmdObj.opts().amount || cmdObj.opts().mainnet || cmdObj.opts().sepolia || cmdObj.opts().rpcUrl) {
-            runDeposit(cmdObj.opts());
+        let chainName = '';
+        if (options.mainnet) {
+            chainName = 'mainnet'
+        } else if (options.sepolia) {
+            chainName = 'sepolia'
         } else {
-            console.error('Error: Missing arguments for deposit.');
-            program.outputHelp();
+            throw new Error("Invalid chain name");
         }
+        runDeposit({
+            destination: options.destination,
+            amount: options.amount,
+            chainName: chainName,
+            keyFile: options.keyFile
+        });
     });
+// destination, amount, chain_name, keyFile,
+// Defaults to 'deposit' subcommand if no other subcommand is provided
+// program
+//     .arguments('[args...]')
+//     .action((args, cmdObj) => {
+//         let chainName = '';
+//         if (cmdObj.opts().mainnet) {
+//             chainName = 'mainnet'
+//         } else if (cmdObj.opts().sepolia) {
+//             chainName = 'sepolia'
+//         } else {
+//             throw new Error("Invalid chain name");
+//         }
+//         if (cmdObj.opts().destination || cmdObj.opts().amount || cmdObj.opts().keyFile ) {
+//             runDeposit({
+//                 destination: cmdObj.opts().destination,
+//                 amount: cmdObj.opts().amount,
+//                 chainName: chainName,
+//                 keyFile: cmdObj.opts().keyFile
+//             });
+//         } else {
+//             console.error('Error: Missing arguments for deposit.');
+//             program.outputHelp();
+//         }
+//     });
+
 program.parse(process.argv);
