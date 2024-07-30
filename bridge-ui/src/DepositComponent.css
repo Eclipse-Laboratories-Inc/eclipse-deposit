@@ -1,0 +1,54 @@
+/* DepositComponent.css */
+
+body {
+  background-color: black;
+  color: #00ff00; /* Bright green text */
+  font-family: 'Courier New', Courier, monospace; /* Monospace font for a retro feel */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #00ff00; /* Glow effect */
+}
+
+input {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 16px;
+  color: black; /* Input text color */
+  background-color: #00ff00; /* Input background color */
+  border: 2px solid #00ff00; /* Input border color */
+  border-radius: 5px;
+  box-shadow: 0 0 5px #00ff00; /* Input shadow */
+}
+
+input:focus {
+  outline: none;
+  border-color: #ffffff; /* Change border color on focus */
+  box-shadow: 0 0 10px #ffffff; /* Change shadow on focus */
+}
+
+button {
+  display: block;
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px;
+  font-size: 18px;
+  color: black; /* Button text color */
+  background-color: #00ff00; /* Button background color */
+  border: 2px solid #00ff00; /* Button border color */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+button:hover {
+  background-color: black; /* Change background on hover */
+  color: #00ff00; /* Change text color on hover */
+  border-color: #00ff00; /* Keep border color */
+  box-shadow: 0 0 10px #00ff00; /* Glow effect on hover */
+}
