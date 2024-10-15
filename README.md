@@ -62,7 +62,6 @@ TODO
     ```bash
     node bin/cli.js -k private-key.txt -d 6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8 -a 0.002 --sepolia
     ```
-   - 
    - The `-k, --key-file` option specifies the path to the Ethereum private key file.
    - The `-d, --destination` option specifies the Solana destination address on the rollup (base58 encoded).
    - The `-a, --amount` option specifies the amount of Ether to deposit.
