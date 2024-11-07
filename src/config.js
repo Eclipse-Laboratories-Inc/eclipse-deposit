@@ -9,7 +9,7 @@ export const NETWORK_CONFIG = {
     rpc: 'https://empty-responsive-patron.quiknode.pro/91dfa8475605dcdec9afdc8273578c9f349774a1/',
   },
   sepolia: {
-    etherBridgeAddress: '0x11b8db6bb77ad8cb9af09d0867bb6b92477dd68e',
+    etherBridgeAddress: '0xe49AAa25a10fd6e15DD7DDCb50904cA1E91f6E01',
     chain: sepolia,
     rpc: 'https://maximum-frosty-forest.ethereum-sepolia.quiknode.pro/cca5941eb8511a5df51881ed54cb91d4eec479a1/',
   },
