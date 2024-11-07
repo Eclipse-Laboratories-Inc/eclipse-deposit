@@ -4,7 +4,7 @@ import { mainnet, sepolia } from 'viem/chains';
 // Define network configurations
 export const NETWORK_CONFIG = {
   mainnet: {
-    etherBridgeAddress: '0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1',
+    etherBridgeAddress: '0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11',
     chain: mainnet,
     rpc: 'https://empty-responsive-patron.quiknode.pro/91dfa8475605dcdec9afdc8273578c9f349774a1/',
   },
