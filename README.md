@@ -46,28 +46,35 @@ TODO
 
 ## Create a Deposit
 
-1. Run the CLI tool with the necessary options:
+1. Run the CLI tool with one of the following options:
+
+   **Using a Solana address directly:**
     ```bash
     node bin/cli.js -k <path_to_private_key> -d <solana_destination_address> -a <amount_in_ether> --mainnet|--sepolia 
     ```
 
+   **Using a Solana key.json file:**
+    ```bash
+    node bin/cli.js -k <path_to_private_key> --solana-key <path_to_solana_key.json> -a <amount_in_ether> --mainnet|--sepolia
+    ```
+
    For example:
 
-   **Mainnet Deposit:**
+   **Mainnet Deposit with address:**
     ```bash
     node bin/cli.js -k private-key.txt -d 6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8 -a 0.002 --mainnet
     ```
 
-   **Sepolia Testnet Deposit:**
+   **Sepolia Testnet Deposit with key.json:**
     ```bash
-    node bin/cli.js -k private-key.txt -d 6g8wB6cJbodeYaEb5aD9QYqhdxiS8igfcHpz36oHY7p8 -a 0.002 --sepolia
+    node bin/cli.js -k private-key.txt --solana-key my-wallet.json -a 0.002 --sepolia
     ```
-   - 
+
    - The `-k, --key-file` option specifies the path to the Ethereum private key file.
    - The `-d, --destination` option specifies the Solana destination address on the rollup (base58 encoded).
+   - The `--solana-key` option specifies the path to a Solana key.json file (alternative to -d).
    - The `-a, --amount` option specifies the amount of Ether to deposit.
-   - Use `--mainnet` or `--sepolia` to select the network. The tool will use different contract addresses depending on the network.
-   - The `-r, --rpc-url` option is optional and allows overriding the default JSON RPC URL.
+   - Use `--mainnet` or `--sepolia` to select the network.
 
 ## Security Note
 

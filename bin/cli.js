@@ -3,19 +3,16 @@
 /**
  * Script to deposit funds to the Eclipse rollup.
  *
- * Usage:
- * # To deposit on Sepolia
- * node bin/cli.js --address [Solana Address] --amount [Amount Ether] --key-file [Private Key File] --sepolia
- *
- * # To deposit on Mainnet
- * node bin/cli.js --address [Solana Address] --amount [Amount Ether] --key-file [Private Key File] --mainnet
- *
- * Example on Sepolia:
- * > node bin/cli.js --address EAjFK3iWqYdRbCAuDhfCNHo2EMj3S7eg5QrU7DMcNEXD --amount 0.002 --key-file private-key.txt --sepolia
- * > Transaction hash: 0x335c067c7280aa3bd2d688cd4c8695c86b3f7fe785be5379c5d98731db0269cf
+ * Usage with direct address:
+ * node bin/cli.js -k private-key.txt -d [Solana Address] -a [Amount Ether] --mainnet|--sepolia
+ * 
+ * Usage with Solana key.json:
+ * node bin/cli.js -k private-key.txt --solana-key [key.json] -a [Amount Ether] --mainnet|--sepolia
  */
 import { Command } from 'commander';
-import { runDeposit } from '../src/lib.js'; // Note the `.js` extension
+import { runDeposit } from '../src/lib.js';
+import fs from 'fs';
+import { Keypair } from '@solana/web3.js';
 
 const program = new Command();
 
@@ -26,7 +23,8 @@ program
 
 program
     .description('Deposit Ether into the Eclipse rollup')
-    .requiredOption('-d, --destination <address>', 'Destination address on the rollup (base58 encoded)')
+    .option('-d, --destination <address>', 'Destination address on the rollup (base58 encoded)')
+    .option('--solana-key <path>', 'Path to Solana key.json file (alternative to --destination)')
     .requiredOption('-a, --amount <ether>', 'Amount in Ether to deposit')
     .option('--mainnet', 'Use Ethereum Mainnet')
     .option('--sepolia', 'Use Sepolia test network')
@@ -36,18 +34,42 @@ program
             console.error('Error: You must specify either --mainnet or --sepolia');
             process.exit(1);
         }
-        let chainName = '';
-        if (options.mainnet) {
-            chainName = 'mainnet'
-        } else if (options.sepolia) {
-            chainName = 'sepolia'
-        } else {
-            throw new Error("Invalid chain name");
+
+        if (!options.destination && !options.solanaKey) {
+            console.error('Error: You must specify either --destination or --solana-key');
+            process.exit(1);
         }
+
+        if (options.destination && options.solanaKey) {
+            console.error('Error: Cannot specify both --destination and --solana-key');
+            process.exit(1);
+        }
+
+        let destination = options.destination;
+        if (options.solanaKey) {
+            try {
+                // Reads the keypair from the JSON file
+                const keyData = JSON.parse(fs.readFileSync(options.solanaKey, 'utf8'));
+
+                // Creates a Keypair from the array of bytes
+                const keypair = Keypair.fromSecretKey(new Uint8Array(keyData));
+
+                // Gets the public key in base58 format
+                destination = keypair.publicKey.toBase58();
+
+                console.log(`Using Solana public key: ${destination}`);
+            } catch (error) {
+                console.error(`Error reading/processing Solana key file: ${error.message}`);
+                process.exit(1);
+            }
+        }
+
+        let chainName = options.mainnet ? 'mainnet' : 'sepolia';
+
         runDeposit({
-            destination: options.destination,
+            destination,
             amount: options.amount,
-            chainName: chainName,
+            chainName,
             keyFile: options.keyFile
         });
     });
